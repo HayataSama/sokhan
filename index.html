@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link rel="stylesheet" href="css/style.css">
+    <title>Document</title>
+    <style>
+        @import url(fontiran.css);
+        @font-face {
+            font-family: isans;
+            font-style: normal;
+            font-weight: normal;
+            src: url('../fonts/eot/IRANSansWeb.eot');
+            src: url('../fonts/eot/IRANSansWeb.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+            url('../fonts/woff2/IRANSansWeb.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+            url('../fonts/woff/IRANSansWeb.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url('../fonts/ttf/IRANSansWeb.ttf') format('truetype');
+        }
+        
+        @font-face {
+            font-family: isans;
+            font-style: normal;
+            font-weight: bold;
+            src: url('../fonts/eot/IRANSansWeb_Bold.eot');
+            src: url('../fonts/eot/IRANSansWeb_Bold.eot?#iefix') format('embedded-opentype'), /* IE6-8 */
+            url('../fonts/woff2/IRANSansWeb_Bold.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/
+            url('../fonts/woff/IRANSansWeb_Bold.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/
+            url('../fonts/ttf/IRANSansWeb_Bold.ttf') format('truetype');
+        }
+        
+        body {
+            direction: rtl;
+            position: relative;
+            background: #F5F5F5;
+        }
+        
+        .login {
+            width: 400px;
+            height: 220px;
+            position: absolute;
+            top: 50%;
+            right: 50%;
+            margin: 220px -200px 0 0;
+        }
+        
+        input.username,
+        input.password {
+            width: 360px;
+            height: 60px;
+            border-radius: 23px;
+            background: #fff;
+            color: #334854;
+            margin: 0 0 20px 0;
+            font: 16px isans;
+            border: none;
+            padding: 0 20px;
+            box-shadow: 0 0 20px 0 #cacaca66;
+        }
+        
+        input.submit {
+            width: 400px;
+            height: 60px;
+            border-radius: 23px;
+            background: #e04462e6;
+            color: #fff;
+            font: 20px isans;
+            border: none;
+            box-shadow: 0 0 20px 0 #e044624d;
+        }
+        
+        input.submit:hover {
+            cursor: pointer;
+            background: #e04462;
+            transition: all ease-in-out 0.2s;
+        }
+        
+        input.submit:focus {
+            background: #e04462;
+        }
+        
+        input:focus {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login">
+        <form action="/add/" method="POST">
+            <input type="text" name="userInfo" rows="20" cols="80" placeholder="نام کاربری" class="username">
+            <input type="password" placeholder="رمز عبور" class="password">
+            <input type="submit" value="ورود" class="submit">
+        </form>
+    </div>
+</body>
+
+</html>
