@@ -58,8 +58,10 @@ func list(w http.ResponseWriter, r *http.Request) {
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 func main() {
+	fs := http.FileServer(http.Dir(""))
+	http.Handle("/", http.StripPrefix("/", fs))
 	http.HandleFunc("/add/", add)
 	http.HandleFunc("/list/", list)
-	http.HandleFunc("/", login)
+	// http.HandleFunc("/", login)
 	http.ListenAndServe(":8080", nil)
 }
