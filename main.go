@@ -8,7 +8,12 @@ import (
 
 type Page struct{}
 
-var users []string
+var users []*user
+
+type user struct {
+	username string
+	password string
+}
 
 // info ro az karbar migirim
 func login(w http.ResponseWriter, r *http.Request) {
@@ -24,16 +29,14 @@ func login(w http.ResponseWriter, r *http.Request) {
 	t.Execute(w, p)
 }
 
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 // info ro be string users ezafe mikonim
 func add(w http.ResponseWriter, r *http.Request) {
-	text := r.FormValue("userInfo")
+	username := r.FormValue("user")
+	password := r.FormValue("pass")
+	text := &user{username: username, password: password}
 	users = append(users, text)
 	http.Redirect(w, r, "/list/", http.StatusFound)
 }
-
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 // info ro be karbar neshoon midim
 func list(w http.ResponseWriter, r *http.Request) {
@@ -49,13 +52,11 @@ func list(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Fprintf(w, "<ul>")
 	for i := 0; i < len(users); i++ {
-		fmt.Fprintf(w, "<li>"+"%s"+"</li><br>", users[i])
+		fmt.Fprintf(w, "<li>"+"%s"+"<br>"+"%s"+"</li><br>", users[i].username, users[i].password)
 	}
 
 	fmt.Fprintf(w, "</ul><br><a href=\"/\">Back to main page</a>")
 }
-
-// +++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 func main() {
 	fs := http.FileServer(http.Dir(""))
@@ -63,5 +64,5 @@ func main() {
 	http.HandleFunc("/add/", add)
 	http.HandleFunc("/list/", list)
 	// http.HandleFunc("/", login)
-	http.ListenAndServe(":8080", nil)
+	http.ListenAndServe(":80", nil)
 }
