@@ -1,12 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"html/template"
 	"net/http"
 )
-
-type Page struct{}
 
 var users []*User
 
@@ -17,16 +14,7 @@ type User struct {
 
 // info ro az karbar migirim
 func login(w http.ResponseWriter, r *http.Request) {
-
-	t, err := template.ParseFiles("index.html")
-	if err != nil {
-		fmt.Println(err.Error())
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-
-		return
-	}
-	p := &Page{}
-	t.Execute(w, p)
+	renderTemplate(w, "index.html", nil)
 }
 
 // info ro be string users ezafe mikonim
@@ -40,16 +28,16 @@ func add(w http.ResponseWriter, r *http.Request) {
 
 // info ro be karbar neshoon midim
 func list(w http.ResponseWriter, r *http.Request) {
-	t, err := template.ParseFiles("list.html")
+	renderTemplate(w, "list.html", users)
+}
+
+func renderTemplate(w http.ResponseWriter, templateName string, data interface{}) {
+	t, err := template.ParseFiles(templateName)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	err = t.Execute(w, users)
-	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
-	}
-
+	err = t.Execute(w, data)
 }
 
 func main() {
