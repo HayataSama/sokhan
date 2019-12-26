@@ -8,11 +8,11 @@ import (
 
 type Page struct{}
 
-var users []*user
+var users []*User
 
-type user struct {
-	username string
-	password string
+type User struct {
+	Username string
+	Password string
 }
 
 // info ro az karbar migirim
@@ -33,8 +33,8 @@ func login(w http.ResponseWriter, r *http.Request) {
 func add(w http.ResponseWriter, r *http.Request) {
 	username := r.FormValue("user")
 	password := r.FormValue("pass")
-	text := &user{username: username, password: password}
-	users = append(users, text)
+	text := User{Username: username, Password: password}
+	users = append(users, &text)
 	http.Redirect(w, r, "/list/", http.StatusFound)
 }
 
@@ -42,20 +42,14 @@ func add(w http.ResponseWriter, r *http.Request) {
 func list(w http.ResponseWriter, r *http.Request) {
 	t, err := template.ParseFiles("list.html")
 	if err != nil {
-		fmt.Println(err.Error())
 		http.Error(w, err.Error(), http.StatusInternalServerError)
-
 		return
 	}
-	p := &Page{}
-	t.Execute(w, p)
-
-	fmt.Fprintf(w, "<ul>")
-	for i := 0; i < len(users); i++ {
-		fmt.Fprintf(w, "<li>"+"%s"+"<br>"+"%s"+"</li><br>", users[i].username, users[i].password)
+	err = t.Execute(w, users)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	fmt.Fprintf(w, "</ul><br><a href=\"/\">Back to main page</a>")
 }
 
 func main() {
